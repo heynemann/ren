@@ -3,11 +3,11 @@
 
 import sys
 import os
-from os.path import join, dirname
+from os.path import join, dirname, exists
 import argparse
 
 def main():
-    lines = sys.stdin and tuple(sys.stdin) or tuple()
+    lines = sys.stdin and [line.strip() for line in sys.stdin] or []
 
     arguments = sys.argv
     parser = argparse.ArgumentParser(description='Renames a folder or file.', prog="ren")
@@ -27,8 +27,11 @@ def main():
 def move(from_path, name):
     to_path = join(dirname(from_path), name)
 
-    os.rename(from_path, to_path)
-    print "renamed %s to %s" % (from_path, to_path)
+    if exists(to_path):
+        print "%s already exists - skipping..." % to_path
+    else:
+        os.rename(from_path, to_path)
+        print "renamed %s to %s" % (from_path, to_path)
 
 if __name__ == '__main__':
     main()
