@@ -15,7 +15,7 @@ def main(arguments=None):
         lines = [line.strip() for line in sys.stdin]
 
     parser = argparse.ArgumentParser(description='Renames a folder or file.', prog="ren")
-    parser.add_argument('path', help='the source path to rename', nargs='*')
+    parser.add_argument('path', help='the source path to rename', nargs='?')
     parser.add_argument('name', help='the name of the file', nargs=1)
 
     options = parser.parse_args(arguments)
