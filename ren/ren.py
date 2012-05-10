@@ -6,15 +6,19 @@ import os
 from os.path import join, dirname, exists
 import argparse
 
-def main():
-    lines = sys.stdin and [line.strip() for line in sys.stdin] or []
+def main(arguments=None):
+    if arguments is None:
+        arguments = sys.argv[1:]
 
-    arguments = sys.argv
+    lines = []
+    if not sys.stdin.isatty():
+        lines = [line.strip() for line in sys.stdin]
+
     parser = argparse.ArgumentParser(description='Renames a folder or file.', prog="ren")
-    parser.add_argument('path', help='the source path to rename', nargs='*')
     parser.add_argument('name', help='the name of the file', nargs=1)
+    parser.add_argument('path', help='the source path to rename', nargs='*')
 
-    options = parser.parse_args(arguments[1:])
+    options = parser.parse_args(arguments)
     name = options.name[0]
 
     if lines:
@@ -34,4 +38,4 @@ def move(from_path, name):
         print "renamed %s to %s" % (from_path, to_path)
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
