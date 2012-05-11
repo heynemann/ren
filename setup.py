@@ -48,6 +48,7 @@ Usage:
       entry_points = {
           'console_scripts': [
               'ren = ren.ren:main',
+              'lyn = ren.lyn:main',
           ],
       },
   )
